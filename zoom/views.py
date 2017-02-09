@@ -12,11 +12,11 @@ from rest_framework.authtoken.models import Token
 @permission_classes((IsAuthenticated,))
 def login(request, format=None):
 
-    token = Token.objects.create(user = request.user)
+   # token = Token.objects.create(user = request.user)
     content = {
         'user': str(request.user),  # `django.contrib.auth.User` instance.
         'auth': str(request.auth),  # None
-        'token': token.key,
+    #    'token': token.key,
 
 
     }
