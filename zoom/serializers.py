@@ -32,8 +32,8 @@ class DiagramOwnerSerializer(serializers.ModelSerializer):
         fields =  "__all__"         
         
 class DiagramSerializer(serializers.ModelSerializer):
-
+    diagram_owmer = DiagramOwnerSerializer(read_only = True)
     class Meta:
         model = Diagram
+        #fields =  ('diagram_type', 'name', 'diagram_owmer') 
         fields =  "__all__" 
-        

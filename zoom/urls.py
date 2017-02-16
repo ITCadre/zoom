@@ -25,4 +25,6 @@ urlpatterns = [
     url(r'^zoom/logout/$', auth_views.logout, {'template_name': 'logged_out.html'}, name='logout'),
     url(r'^zoom/admin/', admin.site.urls),
     url(r'^zoom/auth/', views.login),
+    url(r'^zoom/do/diagrams/(?P<pk>[0-9]+)$', views.do_diagrams),
+
 ]
