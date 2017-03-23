@@ -4,9 +4,13 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.decorators import api_view, authentication_classes, permission_classes
 from rest_framework.authtoken.models import Token
-from zoom.models import Client, Customer, Device, DiagramOwner, Diagram
-from zoom.serializers import DiagramSerializer
+from zoom.models import Client, Customer, Device, DiagramOwner, Diagram, Access, Application
+from zoom.serializers import DiagramSerializer, ApplicationSerializer
+from django.contrib.auth.models import User
 
+
+
+import random
 
 @api_view(['GET'])
 @authentication_classes((SessionAuthentication, BasicAuthentication))
@@ -43,7 +47,7 @@ def login(request, format=None):
 
 def do_diagrams(request, pk):
 
-    print ("waipang")
+
     
     diagrams = Diagram.objects.filter(diagram_owmer__customer__user__pk = pk)
 
@@ -55,3 +59,94 @@ def do_diagrams(request, pk):
     return Response(serializer.data)
 
 
+@api_view(['GET'])
+@permission_classes((AllowAny,))
+
+def get_application(request, pk):
+
+
+    
+    application = Application.objects.filter(pk = pk)[0]
+
+
+    serializer = ApplicationSerializer(application)
+    #print(request.pk)
+    
+    
+    return Response(serializer.data)
+
+
+@api_view(['GET'])
+@permission_classes((AllowAny,))
+def device_applications(request, pk):
+
+    print("hello") 
+    applications = Application.objects.filter(device__pk = pk)
+
+    print (len(applications))
+    serializer = ApplicationSerializer(applications, many = True)
+    #print(request.pk)
+    
+    content = {
+        'myname': "hello",  
+  
+        }
+        
+    return Response(serializer.data)
+    #return Response(content)
+@api_view(['POST'])
+@permission_classes((AllowAny,))
+
+def assign_user_to_diagram(request):
+
+    user_name = request.data.get('username')
+    do_id = request.data.get('do') 
+    print (user_name)
+    print (do_id)
+
+
+    user_set  =  User.objects.filter(username = user_name)
+
+    if len(user_set) == 0:
+        print ("create this user")
+        myuser = User(username= user_name, password = "zoomzoom")
+
+
+        do = DiagramOwner.objects.filter(pk = do_id)[0]
+
+        client  = do.customer.client
+
+        myuser.save()
+        c = Customer(user = myuser, client = client)
+        c.save()
+
+        
+
+        ran = random.randint(1000, 9999)
+
+        access = Access(customer = c, do = do, temp_key = ran  )
+
+
+        access.save()
+
+        content = {
+        'temp_key': ran,  
+  
+        }
+        
+
+
+
+
+    else:
+        print ("what i am gonna do with you")    
+        content = {
+        'myname': "hello",  
+  
+        }
+        
+
+    
+
+
+    return Response(content)

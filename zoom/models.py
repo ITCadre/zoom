@@ -47,9 +47,20 @@ class Diagram(models.Model):
 
 class Access(models.Model):    
     customer = models.ForeignKey(Customer, on_delete=models.CASCADE)
-    device = models.ForeignKey(Device, on_delete=models.CASCADE)
+    device = models.ForeignKey(Device, on_delete=models.CASCADE, blank=True, null = True)
     do = models.ForeignKey(DiagramOwner, on_delete=models.CASCADE)
+    temp_key = models.IntegerField(default =0)
+
+
+    
+class Application(models.Model):    
+    name  = models.CharField(max_length=200) 
+    content = models.TextField(blank = True)
+    device = models.ForeignKey(Device, on_delete=models.CASCADE, blank=True, null = True)
   
+
+
+
 
 
             

@@ -4,7 +4,7 @@ Created on Mar 8, 2016
 @author: Waipang Fong
 '''
 from rest_framework import serializers
-from zoom.models import Client, Customer, Device, DiagramOwner, Diagram
+from zoom.models import Client, Customer, Device, DiagramOwner, Diagram, Application
 
 class ClientSerializer(serializers.ModelSerializer):
 
@@ -30,6 +30,13 @@ class DiagramOwnerSerializer(serializers.ModelSerializer):
     class Meta:
         model = DiagramOwner
         fields =  "__all__"         
+
+class ApplicationSerializer(serializers.ModelSerializer):
+
+    class Meta:
+        model = Application
+        fields =  "__all__"         
+
         
 class DiagramSerializer(serializers.ModelSerializer):
     diagram_owmer = DiagramOwnerSerializer(read_only = True)
