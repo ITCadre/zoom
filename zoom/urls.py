@@ -28,6 +28,7 @@ urlpatterns = [
     url(r'^zoom/do/diagrams/(?P<pk>[0-9]+)$', views.do_diagrams),
     url(r'^zoom/assign_user_to_diagram/$', views.assign_user_to_diagram),
     url(r'^zoom/device/(?P<pk>[0-9]+)/applications/$', views.device_applications),
+    url(r'^zoom/device/(?P<pk>[0-9]+)/applications_count/$', views.device_applications_count),
     url(r'^zoom/application/(?P<pk>[0-9]+)/$', views.get_application),
 
 

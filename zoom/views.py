@@ -75,6 +75,20 @@ def get_application(request, pk):
     
     return Response(serializer.data)
 
+@api_view(['GET'])
+@permission_classes((AllowAny,))
+def device_applications_count(request, pk):
+
+    applications = Application.objects.filter(device__pk = pk)
+
+    print (len(applications))
+    
+    content = {
+        'count': len(applications),  
+  
+        }
+        
+    return Response(content)
 
 @api_view(['GET'])
 @permission_classes((AllowAny,))

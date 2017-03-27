@@ -1,3 +1,8 @@
 zoom/__pycache__/settings.cpython-35.pyc
 *.pyc
 zoom/templates/desktop.ini
+zoom/migrations/0002_access_temp_key.py
+zoom/migrations/0006_application_content.py
+zoom/migrations/0005_application.py
+zoom/migrations/0004_auto_20170221_1014.py
+zoom/migrations/0003_auto_20170221_1011.py
