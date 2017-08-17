@@ -51,7 +51,7 @@ class PABTree:
           Args
           Precondition: This tree contains only one node, the root.
           
-          Return: TODO.
+          Return: PABTree.
           """
           while (len(nodeList)>0):
                for node in nodeList:
@@ -64,7 +64,7 @@ class PABTree:
           Return: set of unique items of the requested dataType.
           Args:
                dataType (String): a string that describes what thing is being asked about.
-                    'owners', 'tasks', systems'.
+          Precondition: dataType is 'owners', 'tasks', or 'systems'.
           """
           #if the root of the tree or subtree then return the set of the items
           if (not self.root.hasChildren()):
@@ -72,7 +72,6 @@ class PABTree:
                     return self.root.owners
                elif (dataType == "tasks"):
                     return self.root.tasks
-               #DEFAULT TO GIVING SYSTEMS IF DATATYPE ARG IS NOT CORRECT
                else:
                     return self.root.systems
           #this is the root with children so count up the children's with its own
@@ -82,7 +81,6 @@ class PABTree:
                     mySetOfStuff = self.root.owners
                elif (dataType == "tasks"):
                     mySetOfStuff = self.root.tasks
-               #DEFAULT TO GIVING SYSTEMS IF DATATYPE ARG IS NOT CORRECT
                else:
                     mySetOfStuff = self.root.systems
                for child in self.root.children:
@@ -112,7 +110,7 @@ class PABTree:
                the tree structure.
           Args:
                dataType (String): a string that describes what thing is being asked about.
-                    'owners', 'tasks', systems'.
+          Precondition: dataType is 'owners', 'tasks', systems'.
           """
           thisRoot= self.root
           #base case: return a dictionary of the name of this process area mapped to its self dictionary,
@@ -127,7 +125,6 @@ class PABTree:
                     mySetOfStuff = self.root.owners
                elif (dataType == "tasks"):
                     mySetOfStuff = self.root.tasks
-               #DEFAULT TO GIVING SYSTEMS IF DATATYPE ARG IS NOT CORRECT
                else:
                     mySetOfStuff = self.root.systems
                topDict= {thisRoot.name: {"self":mySetOfStuff}}

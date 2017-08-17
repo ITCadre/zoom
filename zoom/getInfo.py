@@ -4,6 +4,7 @@
 
 """
 Functions to connect to and get information from the database, process the information, and issue a JSON response.
+***All responses include a mapping of "id" to the diagram's id.
 """
 
 
@@ -19,9 +20,9 @@ from . import PABTree
 import MySQLdb
 import pdb
 
-@api_view(['POST','GET'])
+@api_view(['GET'])
 @authentication_classes((SessionAuthentication, BasicAuthentication))
-@permission_classes((AllowAny,))
+@permission_classes((IsAuthenticated,))
 @renderer_classes((JSONRenderer,))
 def getInfo(request):
      """
@@ -34,7 +35,7 @@ def getInfo(request):
      whichThing=request.GET.get('info')
      groupedBy=request.GET.get('groupedBy')
      if (whichThing not in {"systems", "owners", "tasks","PAB","valid connections", "unique entries",
-                            "unique exits", "mulit-exit boxes", "unique paths", "system interfaces", "max depth"}):
+                            "unique exits", "multi-exit boxes", "unique paths", "system interfaces", "max depth"}):
           return Response({})
      if (whichThing=='max depth'):
           #get process area stuff and make tree
@@ -195,7 +196,7 @@ def createProcessTree(infoTuple):
      """
      #a dictionary for the process areas where KVP is id:PABNode(id,primary_parent_id,process_area)
      PABDict = {}
-     #not sure what to set the parentID of the root to: -1 or -2
+     #not sure what to set the parentID of the root to, -1 or -2
      diagramRoot= PABTree.PABNode(-1,-1,"Full Diagram")
      PABDict[-1]=diagramRoot
      infoTuple=list(infoTuple)
