@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.contrib.auth import views as auth_views
 from django.views.generic.base import TemplateView
 from . import views
+from . import getInfo
 
 urlpatterns = [
     url(r'^zoom/$', TemplateView.as_view(template_name='home.html'), name='home'),
@@ -30,6 +31,6 @@ urlpatterns = [
     url(r'^zoom/device/(?P<pk>[0-9]+)/applications/$', views.device_applications),
     url(r'^zoom/device/(?P<pk>[0-9]+)/applications_count/$', views.device_applications_count),
     url(r'^zoom/application/(?P<pk>[0-9]+)/$', views.get_application),
-
+    url(r'^zoom/getInfo/$', getInfo.getInfo),
 
 ]
