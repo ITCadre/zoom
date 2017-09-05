@@ -22,7 +22,8 @@ import pdb
 
 @api_view(['GET'])
 @authentication_classes((SessionAuthentication, BasicAuthentication))
-@permission_classes((IsAuthenticated,))
+#@permission_classes((IsAuthenticated,))
+@permission_classes((AllowAny,))
 @renderer_classes((JSONRenderer,))
 def getInfo(request):
      """
@@ -31,9 +32,14 @@ def getInfo(request):
           request
      """
      #get parameters
+
+     print("i am here too")
      id=request.GET.get('id')
+     print(id)
      whichThing=request.GET.get('info')
+     print(whichThing)
      groupedBy=request.GET.get('groupedBy')
+     print(groupedBy)
      if (whichThing not in {"systems", "owners", "tasks","PAB","valid connections", "unique entries",
                             "unique exits", "multi-exit boxes", "unique paths", "system interfaces", "max depth"}):
           return Response({})
@@ -78,9 +84,14 @@ def getData(dataRequest, dataSetID, groupedBy):
           dataSetID (Integer): the ID number of the diagram.
           groupedBy (String): 'system', 'owner', 'process area', or 'null'. Non-grouping things can take any.
      """
-     
+
+
+     print("i am here")
      #if tasks check grouping. no grouping named gives ungrouped
      if (dataRequest == 'tasks'):
+
+
+
           if (groupedBy == 'owner'):
                sql = "CALL tasksPerOwner("+str(dataSetID)+");"
           elif (groupedBy == 'system'):
@@ -121,10 +132,12 @@ def getData(dataRequest, dataSetID, groupedBy):
                sql = "CALL numSystems("+str(dataSetID)+");"
      
      # Open database connection
-     db = MySQLdb.connect(host="localhost", 
-                         user="user123",
-                         passwd="Je$$eP!nkman",
-                         db="itc" )
+
+     print(sql)
+     db = MySQLdb.connect(host="localhost",
+                          user="user123",
+                          passwd="user123",
+                          db="itc")
      # prepare a cursor object using cursor() method
      cursor = db.cursor()
      try:
